@@ -14,11 +14,12 @@
 
     /* These compiler options are required by Convex */
     "target": "ESNext",
+    "esModuleInterop": true,
     "lib": ["ES2021", "dom"],
     "forceConsistentCasingInFileNames": true,
     "module": "ESNext",
     "isolatedModules": true,
-    "noEmit": true
+    "noEmit": true,
   },
   "include": ["./**/*"],
   "exclude": ["./_generated"]

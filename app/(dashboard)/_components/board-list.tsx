@@ -14,8 +14,9 @@ interface BoardListProps {
   };
 }
 
+
 const BoardList: React.FC<BoardListProps> = ({ orgId, query }) => {
-  const data = useQuery(api.boards.get, { orgId });
+  const data = useQuery(api.boards.get, { orgId, ...query });
 
   if (data === undefined)
     return (
@@ -25,7 +26,7 @@ const BoardList: React.FC<BoardListProps> = ({ orgId, query }) => {
         </h1>
         <div className="grid grid-cols-1 sm:grid-cols-d:grid-cols-4 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-5 mt-8  pb-10">
           <NewBoardButton orgId={orgId} disabled />
-          <BoardCard.Skeleton />
+          <BoardCard.Skeleton />``
           <BoardCard.Skeleton />
           <BoardCard.Skeleton />
           <BoardCard.Skeleton />
@@ -49,7 +50,7 @@ const BoardList: React.FC<BoardListProps> = ({ orgId, query }) => {
       </h1>
       <div className="grid grid-cols-1 sm:grid-cols-d:grid-cols-4 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-5 mt-8  pb-10">
         <NewBoardButton orgId={orgId} />
-        {data?.map((board) => (
+        {data?.map((board: any) => (
           <BoardCard
             key={board._id}
             authorId={board.authorId}
@@ -59,7 +60,7 @@ const BoardList: React.FC<BoardListProps> = ({ orgId, query }) => {
             authorName={board.authorName}
             createdAt={board._creationTime}
             orgId={board.orgId}
-            isFavorite={false}
+            isFavorite={board.isFavorite}
           />
         ))}
       </div>
