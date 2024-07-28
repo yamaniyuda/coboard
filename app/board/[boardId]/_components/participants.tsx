@@ -2,7 +2,6 @@
 
 import { useSelf, useOthers } from "@liveblocks/react/suspense";
 import { UserAvatar } from "./user-avatar";
-import { currentUser } from "@clerk/nextjs/dist/types/server";
 import { connectionIdToCoor } from "@/lib/utils";
 
 const MAX_SHOWN_USERS = 2

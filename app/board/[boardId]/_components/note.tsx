@@ -58,7 +58,7 @@ export const Note: React.FC<NoteProps> = ({ id, layer, onPointerDown, selectionC
       className="drop-shadow-xl shadow-md"
     >
       <ContentEditable
-        html={value || "Text"}
+        html={value === undefined ? "Text" : value}
         onChange={handleContentChange}
         className={cn('h-full w-full flex items-center justify-center text-center  outline-none', font.className)}
         style={{color: fill ? getContrastingTextColor(fill) : '#000', fontSize: calculateFontSize(width, height)}}

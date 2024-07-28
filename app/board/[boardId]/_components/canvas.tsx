@@ -162,12 +162,12 @@ export const Canvas: React.FC<CanvasProps> = ({ boardId }) => {
   )
 
 
+
   const continueDrawing = useMutation(
     ({ self, setMyPresence }, point: Point, e: React.PointerEvent) => {
       const { pencilDraf } = self.presence
-      
+
       if (
-        canvasState.mode !== CanvasMode.Pencil ||
         e.buttons !== 1 ||
         pencilDraf === null
       ) return
@@ -178,7 +178,7 @@ export const Canvas: React.FC<CanvasProps> = ({ boardId }) => {
           pencilDraf.length === 1 &&
           pencilDraf[0][0] === point.x &&
           pencilDraf[0][1] === point.y
-            ? pencilDraf
+            ? [...pencilDraf, ...pencilDraf]
             : [...pencilDraf, [point.x, point.y, e.pressure]]
       })
     }, [canvasState.mode]
@@ -288,6 +288,7 @@ export const Canvas: React.FC<CanvasProps> = ({ boardId }) => {
       setCanvasState({ mode: CanvasMode.Pencil })
     }, [lastusedColor]
   )
+  
 
 
   const onResizeHandlePointerDown = useCallback((corner: Side, initialBounds: XYWH) => {
@@ -298,6 +299,7 @@ export const Canvas: React.FC<CanvasProps> = ({ boardId }) => {
       corner
     })
   }, [history])
+
 
 
   const onLayerPointerDown = useMutation(
@@ -317,12 +319,15 @@ export const Canvas: React.FC<CanvasProps> = ({ boardId }) => {
   )
 
 
+
   const startDrawing = useMutation(
-    ({ setMyPresence }, point: Point, pressure: number) => {
+    ({ setMyPresence }, point: Point, e: React.PointerEvent) => {
       setMyPresence({
-        pencilDraf: [[ point.x, point.y, pressure ]],
+        pencilDraf: [[ point.x, point.y, e.pressure ]],
         penColor: lastusedColor
       })
+
+      continueDrawing(point, e)
     }, []
   )
 
@@ -336,7 +341,7 @@ export const Canvas: React.FC<CanvasProps> = ({ boardId }) => {
       }
 
       if (canvasState.mode === CanvasMode.Pencil) {
-        startDrawing(point, e.pressure)
+        startDrawing(point, e)
         return
       }
 
@@ -373,11 +378,12 @@ export const Canvas: React.FC<CanvasProps> = ({ boardId }) => {
 
   useEffect(() => {
     function onKeyDown(e: KeyboardEvent) {
-      console.log(e.key)
       switch (e.key) {
-        // case 'Backspace':
-        //   deleteLayer()
-        //   break
+        case 'Backspace':
+          if (canvasState.mode === CanvasMode.SelectionNet) {
+            deleteLayer()
+          }
+          break
         case 'z': {
           if (e.ctrlKey || e.metaKey) {
             if (e.shiftKey) history.redo()

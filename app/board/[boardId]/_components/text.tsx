@@ -47,7 +47,7 @@ export const Text: React.FC<TextProps> = ({ id, layer, onPointerDown, selectionC
   return (
     <foreignObject x={x} y={y} width={width} height={height} onPointerDown={(e) => onPointerDown(e, id)} style={{ outline: selectionColor ? `1px solid ${selectionColor}` : 'none' }}>
       <ContentEditable
-        html={value || "Text"}
+        html={value === undefined ? "Text" : value}
         onChange={handleContentChange}
         className={cn('h-full w-full flex items-center justify-center text-center drop-shadow-md outline-none', font.className)}
         style={{color: fill ? colorToCss(fill) : '#000', fontSize: calculateFontSize(width, height)}}

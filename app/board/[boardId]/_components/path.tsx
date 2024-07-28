@@ -1,4 +1,4 @@
-import { getSvgPathFromStroke } from "@/lib/utils"
+import { colorToCss, getSvgPathFromStroke } from "@/lib/utils"
 import getStroke from "perfect-freehand"
 
 interface PathProps {
@@ -30,6 +30,7 @@ export const Path: React.FC<PathProps> = ({ onPointerDown, fill, points, x, y, s
           ${y}px
         )`
       }}
+      fill={fill ? fill : '#000'}
       x={0}
       y={0}
     />

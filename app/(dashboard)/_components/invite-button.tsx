@@ -3,6 +3,7 @@ import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog"
 import { OrganizationProfile } from "@clerk/nextjs"
 import { Plus } from "lucide-react"
 
+
 const InviteButton = () => {
   return (
     <Dialog>
@@ -12,7 +13,7 @@ const InviteButton = () => {
           Invite members
         </Button>
       </DialogTrigger>
-      <DialogContent className="p-0 bg-transparent border-none max-w-max">
+      <DialogContent className="p-0 bg-transparent border-none max-w-max ">
         <OrganizationProfile routing="virtual" appearance={{
           elements: {
             cardBox: {
